@@ -1,4 +1,4 @@
-from src.inference.predict import Predictor
+from src.inference.predictor import Predictor
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 if __name__ == '__main__':
@@ -16,4 +16,3 @@ if __name__ == '__main__':
     result = predictor.predict(text)
 
     print(result)
-    
