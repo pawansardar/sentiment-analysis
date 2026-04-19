@@ -2,8 +2,9 @@ from datasets import load_dataset
 from transformers import AutoTokenizer
 
 class SentimentDataset:
-    def __init__(self, model_name='distilbert-base-uncased'):
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+    def __init__(self, config):
+        self.config = config["model"]
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config["name"])
 
         self.dataset = load_dataset("glue", "sst2")
 

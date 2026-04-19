@@ -1,9 +1,11 @@
 from transformers import Trainer, TrainingArguments, DataCollatorWithPadding
 from src.utils.metrics import compute_metrics
 
-def get_trainer(model, train_dataset, val_dataset, tokenizer):
+def get_trainer(model, train_dataset, val_dataset, tokenizer, config):
+    training_cfg = config["training"]
+
     training_args = TrainingArguments(
-        output_dir="./experiments",
+        output_dir=training_cfg["output_dir"],
 
         eval_strategy="steps",
         eval_steps=500,
@@ -15,12 +17,12 @@ def get_trainer(model, train_dataset, val_dataset, tokenizer):
         logging_strategy="steps",
         logging_steps=100,
 
-        learning_rate=2e-5,
-        per_device_train_batch_size=16,
-        num_train_epochs=3,
+        learning_rate=float(training_cfg["learning_rate"]),
+        per_device_train_batch_size=int(training_cfg["batch_size"]),
+        num_train_epochs=int(training_cfg["num_epochs"]),
         
-        weight_decay=0.01,
-        warmup_ratio=0.1,
+        weight_decay=float(training_cfg["weight_decay"]),
+        warmup_ratio=float(training_cfg["warmup_ratio"]),
 
         load_best_model_at_end=True,
         metric_for_best_model="accuracy"

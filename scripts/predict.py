@@ -1,9 +1,14 @@
 from src.inference.predictor import Predictor
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from src.config.config_loader import load_config
 
 if __name__ == '__main__':
-    model =  AutoModelForSequenceClassification.from_pretrained('./final_model')
-    tokenizer = AutoTokenizer.from_pretrained('./final_model')
+    config = load_config()
+
+    model_path = config["paths"]["model_dir"]
+
+    model =  AutoModelForSequenceClassification.from_pretrained(model_path)
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
 
     predictor = Predictor(model, tokenizer)
 
